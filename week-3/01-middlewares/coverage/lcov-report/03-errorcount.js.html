@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">90% </span>
+                <span class="strong">94.44% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>27/30</span>
+                <span class='fraction'>34/36</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>3/4</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">90% </span>
+                <span class="strong">94.44% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>27/30</span>
+                <span class='fraction'>34/36</span>
             </div>
         
             
@@ -93,7 +93,12 @@
 <a name='L28'></a><a href='#L28'>28</a>
 <a name='L29'></a><a href='#L29'>29</a>
 <a name='L30'></a><a href='#L30'>30</a>
-<a name='L31'></a><a href='#L31'>31</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -102,16 +107,14 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -123,44 +126,56 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const request = require('supertest');
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">const request = require('supertest');
 const assert = require('assert');
 const express = require('express');
+const e = require("express");
 &nbsp;
 const app = express();
 let errorCount = 0;
 &nbsp;
-// Use middleware to handle errors
-app.use((err, req, res, next) =&gt; {
-<span class="cstat-no" title="statement not covered" >  errorCount++;</span>
-<span class="cstat-no" title="statement not covered" >  res.status(404).json({ error: 'Not Found' });</span>
+// You have been given an express server which has a few endpoints.
+// Your task is to
+// 1. Ensure that if there is ever an exception, the end user sees a status code of 404
+// 2. Maintain the errorCount variable whose value should go up every time there is an exception in any endpoint
+&nbsp;
+&nbsp;
+app.get('/user', function(req, res) {
+  throw new Error("User not found")<span class="branch-0 cbranch-no" title="branch not covered" >;</span>
+<span class="cstat-no" title="statement not covered" >  res.status(200).json({ name: 'john' });</span>
 });
 &nbsp;
-app.get('/user', function (req, res, next) {
-  try {
-    throw new Error('User not found');
-  } catch (err) {
-    next(err); // Pass the error to the error-handling middleware
-  }
-});
-&nbsp;
-app.post('/user', function (req, res) {
+app.post('/user', function(req, res) {
 <span class="cstat-no" title="statement not covered" >  res.status(200).json({ msg: 'created dummy user' });</span>
 });
 &nbsp;
-app.get('/errorCount', function (req, res) {
+app.get('/errorCount', function(req, res) {
   res.status(200).json({ errorCount });
 });
 &nbsp;
-module.exports = app;
-&nbsp;</pre></td></tr></table></pre>
+app.use((err, req, res, next) =&gt; {
+    res.status(404).json({
+      message: "Error",
+      status: 404,
+    });
+    errorCount++;
+})
+&nbsp;
+module.exports = app;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-12-22T05:59:19.612Z
+                at 2023-12-22T06:42:30.846Z
             </div>
         <script src="prettify.js"></script>
         <script>

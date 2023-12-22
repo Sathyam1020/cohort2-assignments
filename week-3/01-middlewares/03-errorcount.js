@@ -29,7 +29,8 @@ app.use((err, req, res, next) => {
     res.status(404).json({
       message: "Error",
       status: 404,
-    })
+    });
+    errorCount++;
 })
 
 module.exports = app;
