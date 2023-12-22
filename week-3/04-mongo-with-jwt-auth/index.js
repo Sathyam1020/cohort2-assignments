@@ -1,14 +1,24 @@
-const express = require('express');
-const bodyParser = require('body-parser');
+const express = require("express");
+const bodyParser = require("body-parser");
+const admin = require('./routes/admin');
+const database = require("./config/database")
+const {Admin} = require("./models/admin");
+
 const app = express();
-const adminRouter = require("./routes/admin")
-const userRouter = require("./routes/user");
 
-// Middleware for parsing request bodies
+const port = 4000;
+
 app.use(bodyParser.json());
-app.use("/admin", adminRouter)
-app.use("/user", userRouter)
 
-app.listen(3000, () => {
-    console.log(`Server is running on port ${PORT}`);
+database.connect();
+
+// app.use("/admin", adminRouter);
+app.use('/admin', admin)
+
+app.get('/', async(req, res) => {
+    res.send("Hello from the other side of the world");
+});
+
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
 });

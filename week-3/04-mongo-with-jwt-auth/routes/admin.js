@@ -1,22 +1,15 @@
-const { Router } = require("express");
-const adminMiddleware = require("../middleware/admin");
-const router = Router();
+const express = require("express")
+const router = express.Router()
 
-// Admin Routes
-app.post('/signup', (req, res) => {
-    // Implement admin signup logic
-});
+const {signup, signin} = require('../controllers/adminAuth');
+const {createCourse, getAllCourses} = require('../controllers/adminCourse');
 
-app.post('/signin', (req, res) => {
-    // Implement admin signup logic
-});
+const {adminMiddleware} = require('../middleware/admin');
 
-app.post('/courses', adminMiddleware, (req, res) => {
-    // Implement course creation logic
-});
+router.post('/signup', signup);
+router.post('/signin', signin);
 
-app.get('/courses', adminMiddleware, (req, res) => {
-    // Implement fetching all courses logic
-});
+router.post('/create-course', adminMiddleware, createCourse);
+router.get('/all-courses', adminMiddleware, getAllCourses);
 
-module.exports = router;
+module.exports = router
