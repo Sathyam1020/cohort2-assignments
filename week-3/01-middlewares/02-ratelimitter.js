@@ -12,9 +12,25 @@ const app = express();
 // clears every one second
 
 let numberOfRequestsForUser = {};
+
+app.use((req, res, next) => {
+    const userId = req.header("user-id");
+    if(!numberOfRequestsForUser[userId]){
+        numberOfRequestsForUser[userId] = 1;
+    } else if(numberOfRequestsForUser[userId] > 5) {
+        return res.status(404).json({
+            message: "Rate limit exceeded",
+            status: 404,
+        });
+    } else {
+        numberOfRequestsForUser[userId]++;
+    }
+    next();
+});
+
 setInterval(() => {
     numberOfRequestsForUser = {};
-}, 1000)
+}, 1000);
 
 app.get('/user', function(req, res) {
   res.status(200).json({ name: 'john' });
