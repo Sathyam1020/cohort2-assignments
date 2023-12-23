@@ -1,14 +1,17 @@
 // Middleware for handling auth
 const jwt = require("jsonwebtoken")
-const { Admin } = require("../models/admin");
+const Admin = require("../models/admin");
 
 exports.adminMiddleware = async (req, res, next) => {
     try {
         //Extract the token
+        console.log(req.body);
         const token =
-            req.cookies.token ||
+            // req.cookies.token ||
             req.body.token ||
             req.header("Authorization").replace("Bearer ", "");
+
+            
         //If no token then send an error response
         if(!token){
             return res.status(401).json({

@@ -1,4 +1,4 @@
-const {Course} = require("../models/course");
+const Course = require("../models/course");
 require("dotenv").config()
 
 exports.createCourse = async(req, res) => {
