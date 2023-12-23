@@ -6,7 +6,7 @@ exports.userMiddleware = async (req, res, next) => {
     try {
         //Extract the token
         const token =
-            req.cookies.token ||
+            // req.cookies.token ||
             req.body.token ||
             req.header("Authorization").replace("Bearer ", "");
         //If no token then send an error response

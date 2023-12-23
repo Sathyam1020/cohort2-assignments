@@ -28,7 +28,7 @@ exports.signup = async (req, res) => {
         const user = await User.create({
             username: username,
             email: email,
-            password: password,
+            password: hashedPassword,
         })
 
         //Return success response
@@ -64,7 +64,7 @@ exports.signin = async (req, res) => {
 
         // Find user with provided email
         const user = await User.findOne({ email: email });
-
+        console.log(user);
         // If user not found with provided email
         if (!user) {
             // Return 401 Unauthorized status code with error message
