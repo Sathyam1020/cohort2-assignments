@@ -12,4 +12,5 @@ router.post('/signin', signin);
 router.post('/create-course', adminMiddleware, createCourse);
 router.get('/all-courses', adminMiddleware, getAllCourses);
 
+
 module.exports = router
