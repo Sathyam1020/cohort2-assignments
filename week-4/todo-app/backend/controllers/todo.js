@@ -23,7 +23,7 @@ exports.createTodo = async(req, res) => {
             title: title,
             description: description,
             user: userId
-        })
+        });
 
         const user = await User.findById(userId);
         user.todos.push(todo._id);
